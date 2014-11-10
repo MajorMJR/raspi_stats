@@ -2,35 +2,32 @@ package main
 
 import (
 	"net/http"
-	"os"
 	"text/template"
 )
 
 func mainHandler(w http.ResponseWriter, r *http.Request) {
-	hostname, _ := os.Hostname()
-	temp, _ := getTemp()
-	system := &System{Hostname: hostname, Temp: temp}
+	system, _ := getSysinfo()
 	cpu, _ := getCPUInfo("/proc/cpuinfo")
 	cpuload, _ := getCpuLoad("/proc/loadavg")
+	memory, _ := getMemInfo("/proc/meminfo")
 
 	data := struct {
 		System  *System
 		CPU     *CPUinfo
 		CPUload *CPUload
-		Env     string
+		Memory  *Mem
 	}{
 		system,
 		cpu,
 		cpuload,
-		os.Getenv("GOPATH"),
+		memory,
 	}
-	//fmt.Println(getCPUInfo("/proc/cpuinfo"))
+
 	t, _ := template.ParseFiles("tmpl/index.html")
 	t.Execute(w, data)
 }
 
 func main() {
-
 	http.HandleFunc("/", mainHandler)
 	http.ListenAndServe(":8080", nil)
 

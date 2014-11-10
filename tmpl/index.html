@@ -7,7 +7,6 @@
 <h1>Raspi Stats</h1>
 <ul>
 	<li>Hostname: {{ .System.Hostname }}</li>
-	<li>Gopath: {{ .Env }}</li>
 	<li>Current temperature: {{.System.Temp}}</li>
 </ul>
 <ul>
@@ -26,6 +25,13 @@
 	<li>One min: {{ .CPUload.OneMin }}</li>
 	<li>Five min: {{ .CPUload.FiveMin }}</li>
 	<li>Fifteen min: {{ .CPUload.FifteenMin }}</li>
+</ul>
+<h5>MEMORY</h5>
+<ul>
+	<li>Total Memory: {{ .Memory.Total }}</li>
+	<li>Free Memory: {{ .Memory.Free }}</li>
+	<li>Available Memory: {{ .Memory.Available }}</li>
+	<li>Cached Memory: {{ .Memory.Cached }}</li>
 </ul>
 </body>
 </html>

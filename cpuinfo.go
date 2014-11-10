@@ -69,7 +69,7 @@ func getCPUInfo(path string) (*CPUinfo, error) {
 			processor.Model, _ = strconv.ParseInt(value, 10, 32)
 		case "model name":
 			if value == "ARMv6-compatible processor rev 7 (v6l)" {
-				processor.MHz, _ = getCPUMHzoRaspi()
+				processor.MHz, _ = getCPUMHzRaspi()
 			}
 			processor.ModelName = value
 		case "flags":
@@ -94,7 +94,7 @@ func getCPUMHzRaspi() (float64, error) {
 	if err != nil {
 		return 0, err
 	}
-
+	mHz = mHz / 1000
 	return mHz, nil
 }
 

@@ -2,6 +2,7 @@ package main
 
 import (
 	"io/ioutil"
+	"os"
 	"strconv"
 )
 
@@ -9,6 +10,14 @@ type System struct {
 	Hostname string
 	Ip_addr  string
 	Temp     float64
+}
+
+func getSysinfo() (*System, error) {
+	hostname, _ := os.Hostname()
+	temp, _ := getTemp()
+	system := &System{Hostname: hostname, Temp: temp}
+
+	return system, nil
 }
 
 func getTemp() (float64, error) {
