@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"net/http"
 	"os"
 	"text/template"
@@ -9,8 +8,9 @@ import (
 
 func mainHandler(w http.ResponseWriter, r *http.Request) {
 	hostname, _ := os.Hostname()
-	system := &System{Hostname: hostname}
-	cpu, _ := readCPUInfo("/proc/cpuinfo")
+	temp, _ := getTemp()
+	system := &System{Hostname: hostname, Temp: temp}
+	cpu, _ := getCPUInfo("/proc/cpuinfo")
 	cpuload, _ := getCpuLoad("/proc/loadavg")
 
 	data := struct {
@@ -24,7 +24,7 @@ func mainHandler(w http.ResponseWriter, r *http.Request) {
 		cpuload,
 		os.Getenv("GOPATH"),
 	}
-	fmt.Println(getCpuLoad("/proc/loadavg"))
+	//fmt.Println(getCPUInfo("/proc/cpuinfo"))
 	t, _ := template.ParseFiles("tmpl/index.html")
 	t.Execute(w, data)
 }

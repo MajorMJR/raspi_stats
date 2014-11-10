@@ -3,7 +3,6 @@
 package main
 
 import (
-	"fmt"
 	"io/ioutil"
 	"regexp"
 	"strconv"
@@ -32,7 +31,7 @@ type CPUload struct {
 
 var cpuinfoRegExp = regexp.MustCompile("([^:]*?)\\s*:\\s*(.*)$")
 
-func readCPUInfo(path string) (*CPUinfo, error) {
+func getCPUInfo(path string) (*CPUinfo, error) {
 	b, err := ioutil.ReadFile(path)
 	if err != nil {
 		return nil, err
@@ -69,6 +68,9 @@ func readCPUInfo(path string) (*CPUinfo, error) {
 		case "model":
 			processor.Model, _ = strconv.ParseInt(value, 10, 32)
 		case "model name":
+			if value == "ARMv6-compatible processor rev 7 (v6l)" {
+				processor.MHz, _ = getCPUMHzoRaspi()
+			}
 			processor.ModelName = value
 		case "flags":
 			processor.Flags = strings.Fields(value)
@@ -82,6 +84,20 @@ func readCPUInfo(path string) (*CPUinfo, error) {
 	return &cpuinfo, nil
 }
 
+func getCPUMHzRaspi() (float64, error) {
+	raspi_mhz, err := ioutil.ReadFile("/sys/devices/system/cpu/cpu0/cpufreq/scaling_cur_freq")
+	if err != nil {
+		return 0, err
+	}
+	mHz_string := string(raspi_mhz)
+	mHz, err := strconv.ParseFloat(mHz_string[:len(mHz_string)-1], 64)
+	if err != nil {
+		return 0, err
+	}
+
+	return mHz, nil
+}
+
 func getCpuLoad(path string) (*CPUload, error) {
 	b, err := ioutil.ReadFile(path)
 	if err != nil {
@@ -89,10 +105,8 @@ func getCpuLoad(path string) (*CPUload, error) {
 	}
 
 	load := &CPUload{}
-
 	content := string(b)
 	lines := strings.Split(content, " ")
-	fmt.Println(content)
 
 	load.OneMin, _ = strconv.ParseFloat(lines[0], 64)
 	load.FiveMin, _ = strconv.ParseFloat(lines[1], 64)

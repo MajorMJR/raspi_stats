@@ -1,12 +1,14 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title></title>
+	<title>Raspi Stats</title>
 </head>
 <body>
+<h1>Raspi Stats</h1>
 <ul>
 	<li>Hostname: {{ .System.Hostname }}</li>
 	<li>Gopath: {{ .Env }}</li>
+	<li>Current temperature: {{.System.Temp}}</li>
 </ul>
 <ul>
 
@@ -15,8 +17,8 @@
 	{{ end }}
 
 	{{range .CPU.Processors}}
-	<li>CPU ID:{{.Id}}</li>
-	<li>Clockspeed: {{.MHz}}</li>
+	<li>CPU ID:{{ .Id }}</li>
+	Clockspeed: {{.MHz}}
 	{{end}}
 </ul>
 <h5>CPU LOAD</h5>
