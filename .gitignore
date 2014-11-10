@@ -22,3 +22,6 @@ _testmain.go
 *.exe
 *.test
 *.prof
+
+raspi_stats.sublime-workspace
+raspi_stats.sublime-project
