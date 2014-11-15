@@ -10,9 +10,9 @@
 	<li>Current temperature: {{.System.Temp}}</li>
 </ul>
 <ul>
-
 	{{range $index, $element := .CPU.Processors}}
-	    {{ if eq $index 0}} <li>{{ $element.ModelName }}</li> {{end}}
+	{{ if eq $index 0}}
+	<li>{{ $element.ModelName }}</li> {{end}}
 	{{ end }}
 
 	{{range .CPU.Processors}}
@@ -33,6 +33,21 @@
 	<li>Available Memory: {{ .Memory.Available }}</li>
 	<li>Cached Memory: {{ .Memory.Cached }}</li>
 </ul>
+<h5>MOUNTS</h5>
+<table>
+	<tr>
+		<th>Device</th>
+		<th>Mount</th>
+		<th>Filesystem</th>
+	</tr>
+	{{range .Mounts.Mount}}
+	<tr>
+		<td>{{.Device}}</td>
+		<td>{{.Mount}}</td>
+		<td>{{.Fs}}</td>
+	</tr>
+	{{end}}
+</table>
 </body>
 </html>
 

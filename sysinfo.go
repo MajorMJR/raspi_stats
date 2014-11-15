@@ -10,6 +10,7 @@ type System struct {
 	Hostname string
 	Ip_addr  string
 	Temp     float64
+	OS       string
 }
 
 func getSysinfo() (*System, error) {
@@ -18,6 +19,10 @@ func getSysinfo() (*System, error) {
 	system := &System{Hostname: hostname, Temp: temp}
 
 	return system, nil
+}
+
+func getOS() {
+
 }
 
 func getTemp() (float64, error) {

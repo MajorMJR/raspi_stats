@@ -10,19 +10,21 @@ func mainHandler(w http.ResponseWriter, r *http.Request) {
 	cpu, _ := getCPUInfo("/proc/cpuinfo")
 	cpuload, _ := getCpuLoad("/proc/loadavg")
 	memory, _ := getMemInfo("/proc/meminfo")
+	mounts, _ := getMounts("/proc/mounts")
 
 	data := struct {
 		System  *System
 		CPU     *CPUinfo
 		CPUload *CPUload
 		Memory  *Mem
+		Mounts  *Mounts
 	}{
 		system,
 		cpu,
 		cpuload,
 		memory,
+		mounts,
 	}
-
 	t, _ := template.ParseFiles("tmpl/index.html")
 	t.Execute(w, data)
 }
