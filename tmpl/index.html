@@ -2,52 +2,101 @@
 <html>
 <head>
 	<title>Raspi Stats</title>
+	<link rel="stylesheet" href="static/base.css">
+	<link rel="stylesheet" href="static/skeleton.css">
+	<link rel="stylesheet" href="static/layout.css">
 </head>
 <body>
-<h1>Raspi Stats</h1>
-<ul>
-	<li>Hostname: {{ .System.Hostname }}</li>
-	<li>Current temperature: {{.System.Temp}}</li>
-</ul>
-<ul>
-	{{range $index, $element := .CPU.Processors}}
-	{{ if eq $index 0}}
-	<li>{{ $element.ModelName }}</li> {{end}}
-	{{ end }}
 
-	{{range .CPU.Processors}}
-	<li>CPU ID:{{ .Id }}</li>
-	Clockspeed: {{.MHz}}
-	{{end}}
-</ul>
-<h5>CPU LOAD</h5>
-<ul>
-	<li>One min: {{ .CPUload.OneMin }}</li>
-	<li>Five min: {{ .CPUload.FiveMin }}</li>
-	<li>Fifteen min: {{ .CPUload.FifteenMin }}</li>
-</ul>
-<h5>MEMORY</h5>
-<ul>
-	<li>Total Memory: {{ .Memory.Total }}</li>
-	<li>Free Memory: {{ .Memory.Free }}</li>
-	<li>Available Memory: {{ .Memory.Available }}</li>
-	<li>Cached Memory: {{ .Memory.Cached }}</li>
-</ul>
-<h5>MOUNTS</h5>
-<table>
-	<tr>
-		<th>Device</th>
-		<th>Mount</th>
-		<th>Filesystem</th>
-	</tr>
-	{{range .Mounts.Mount}}
-	<tr>
-		<td>{{.Device}}</td>
-		<td>{{.Mount}}</td>
-		<td>{{.Fs}}</td>
-	</tr>
-	{{end}}
-</table>
+<div class="container">
+	<h1>Raspi Stats</h1>
+	<hr>
+
+	<ul>
+		<li>Hostname: {{ .System.Hostname }}</li>
+		<li>Current temperature: {{.System.Temp}}</li>
+		<li>Time: {{.System.Time}}</li>
+	</ul>
+	<ul>
+	{{range $index, $element := .CPU.Processors}}
+		{{ if eq $index 0}}
+		<li>{{ $element.ModelName }}</li>
+		{{end}}
+		<li>CPU ID:{{ .Id }}</li>
+		Clockspeed: {{.MHz}} MHz
+	{{ end }}
+	</ul>
+	<div class="four columns">
+		<h5>CPU LOAD</h5>
+		<table>
+			<tr>
+			<th>CPU Load</th>
+			<th></th>
+			</tr>
+			<tr>
+				<td>One min: </td>
+				<td>{{ .CPUload.OneMin }}</td>
+			</tr>
+			<tr>
+				<td>Five min: </td>
+				<td>{{ .CPUload.FiveMin }}</td>
+			</tr>
+			<tr>
+				<td>Fifteen min: </td>
+				<td>{{ .CPUload.FifteenMin }}</td>
+			</tr>
+		</table>
+	</div>
+	<div class="four columns">
+		<h5>MEMORY</h5>
+		<table>
+			<tr>
+				<th>Memory</th>
+				<th></th>
+			</tr>
+			<tr>
+				<td>Total Memory:</td>
+				<td>{{ .Memory.Total }}</td>
+			</tr>
+			<tr>
+				<td>Free Memory:</td>
+				<td>{{ .Memory.Free }}</td>
+			</tr>
+			<tr>
+				<td>Available Memory:</td>
+				<td>{{ .Memory.Available }}</td>
+			</tr>
+			<tr>
+				<td>Cached Memory:</td>
+				<td>{{ .Memory.Cached }}</td>
+			</tr>
+		</table>
+	</div>
+	<div class="four columns">
+		<h5>MOUNTS</h5>
+		<table>
+			<tr>
+				<th>Device</th>
+				<th>Mount</th>
+				<th>Filesystem</th>
+			</tr>
+			{{range .Mounts.Mount}}
+			<tr>
+				<td>{{.Device}}</td>
+				<td>{{.Mount}}</td>
+				<td>{{.Fs}}</td>
+			</tr>
+			{{end}}
+		</table>
+	</div>
+
+</div>
+
+
+
+
+
+
 </body>
 </html>
 

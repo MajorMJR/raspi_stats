@@ -4,6 +4,7 @@ import (
 	"io/ioutil"
 	"os"
 	"strconv"
+	"time"
 )
 
 type System struct {
@@ -11,18 +12,29 @@ type System struct {
 	Ip_addr  string
 	Temp     float64
 	OS       string
+	Time     string
 }
 
 func getSysinfo() (*System, error) {
 	hostname, _ := os.Hostname()
 	temp, _ := getTemp()
-	system := &System{Hostname: hostname, Temp: temp}
+	time, _ := getTime()
+	system := &System{
+		Hostname: hostname,
+		Temp:     temp,
+		Time:     time,
+	}
 
 	return system, nil
 }
 
 func getOS() {
 
+}
+
+func getTime() (string, error) {
+	t := time.Now().Local()
+	return t.Format(time.Stamp), nil
 }
 
 func getTemp() (float64, error) {

@@ -25,12 +25,14 @@ func mainHandler(w http.ResponseWriter, r *http.Request) {
 		memory,
 		mounts,
 	}
+
 	t, _ := template.ParseFiles("tmpl/index.html")
 	t.Execute(w, data)
 }
 
 func main() {
 	http.HandleFunc("/", mainHandler)
+	http.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("static"))))
 	http.ListenAndServe(":8080", nil)
 
 }
