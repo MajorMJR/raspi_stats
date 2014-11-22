@@ -16,18 +16,33 @@
 		<li>Hostname: {{ .System.Hostname }}</li>
 		<li>Current temperature: {{.System.Temp}}</li>
 		<li>Time: {{.System.Time}}</li>
-	</ul>
-	<ul>
-	{{range $index, $element := .CPU.Processors}}
+		<li>OS: {{.System.OS}}</li>
+		<li>CPU:
+		{{range $index, $element := .CPU.Processors}}
 		{{ if eq $index 0}}
-		<li>{{ $element.ModelName }}</li>
+			{{ $element.ModelName }}
 		{{end}}
-		<li>CPU ID:{{ .Id }}</li>
-		Clockspeed: {{.MHz}} MHz
-	{{ end }}
+		{{ end }}
+		</li>
+	</ul>
+
+	<ul>
+
 	</ul>
 	<div class="four columns">
-		<h5>CPU LOAD</h5>
+		<h5>CPU </h5>
+		<table>
+		<tr>
+			<th>CPU #</th>
+			<th>Clockspeed</th>
+		</tr>
+		{{range .CPU.Processors}}
+		<tr>
+			<td>{{ .Id }}</td>
+			<td>{{ .MHz }}</td>
+		</tr>
+		{{end}}
+		</table>
 		<table>
 			<tr>
 			<th>CPU Load</th>

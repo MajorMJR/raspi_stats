@@ -19,17 +19,24 @@ func getSysinfo() (*System, error) {
 	hostname, _ := os.Hostname()
 	temp, _ := getTemp()
 	time, _ := getTime()
+	os, _ := getOS()
 	system := &System{
 		Hostname: hostname,
 		Temp:     temp,
 		Time:     time,
+		OS:       os,
 	}
 
 	return system, nil
 }
 
-func getOS() {
+func getOS() (string, error) {
+	b, err := ioutil.ReadFile("/etc/issue.net")
+	if err != nil {
+		return "", err
+	}
 
+	return string(b), nil
 }
 
 func getTime() (string, error) {

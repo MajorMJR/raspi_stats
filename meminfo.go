@@ -35,7 +35,13 @@ func getMemInfo(path string) (*Mem, error) {
 		submatches := cpuinfoRegExp.FindStringSubmatch(line)
 		key := submatches[1]
 		value := submatches[2]
-		value = value[:len(value)-3]
+
+		// If value has "kB" then trim it
+		if value == "0" {
+			value = value
+		} else {
+			value = value[:len(value)-3]
+		}
 
 		switch key {
 		case "MemTotal":

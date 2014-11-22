@@ -48,7 +48,7 @@ func getCPUInfo(path string) (*CPUinfo, error) {
 		var value string
 
 		if len(line) == 0 && i != len(lines)-1 {
-			// end of a processor
+			// blank line marks end of a processor
 			cpuinfo.Processors = append(cpuinfo.Processors, *processor)
 			processor = &Processor{}
 			continue
