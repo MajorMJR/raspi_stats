@@ -34,7 +34,7 @@ func mainHandler(w http.ResponseWriter, r *http.Request) {
 func main() {
 	http.HandleFunc("/", mainHandler)
 	http.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("static"))))
-	http.ListenAndServe(":8080", nil)
+	http.ListenAndServe(":8888", nil)
 	fmt.Println("Server running on :8080")
 
 }
