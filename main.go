@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"net/http"
 	"text/template"
 )
@@ -34,5 +35,6 @@ func main() {
 	http.HandleFunc("/", mainHandler)
 	http.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("static"))))
 	http.ListenAndServe(":8080", nil)
+	fmt.Println("Server running on :8080")
 
 }

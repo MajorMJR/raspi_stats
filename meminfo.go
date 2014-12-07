@@ -32,7 +32,7 @@ func getMemInfo(path string) (*Mem, error) {
 			continue
 		}
 
-		submatches := cpuinfoRegExp.FindStringSubmatch(line)
+		submatches := meminfoRegExp.FindStringSubmatch(line)
 		key := submatches[1]
 		value := submatches[2]
 
